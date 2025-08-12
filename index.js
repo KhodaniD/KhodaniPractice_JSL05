@@ -11,7 +11,7 @@ const songs = [
     { title: "Come and Get Your Love", artist: "Redbone", genre: "Rock" },
     { title: "I'm Not in Love", artist: "10cc", genre: "Pop" },
     { title: "Fooled Around and Fell in Love", artist: "Elvin Bishop", genre: "Rock" },
-    // Feel free to add even more songs
+    { title: "The Chain", artist: "Fleetwood Mac", genre: "Rock" },
 ];
 
 
@@ -19,16 +19,44 @@ const songs = [
 const guardians = {
     "Star-Lord": "Rock",
     "Gamora": "Pop",
-    // Add preferences for Drax, Rocket, and Groot
+    "Drax": "R&B",
+    "Rocket": "Rock",
+    "Groot": "Pop",
 };
 
 // Function to generate playlist based on preferred genre
 function generatePlaylist(guardians, songs) {
-    // Use the map() function to create playlists for each Guardian
-    // Your code here
+    const playlistContainer = document.getElementById("playlists");
+
+    // Clear any existing content in the playlists container
+    playlistContainer.innerHTML = '';
+
+    Object.entries(guardians).forEach(([guardian, genre]) => {
+        // Filter songs based on the guardian's preferred genre
+        const guardianSongs = songs.filter(song => song.genre === genre);
+
+        // Create a new div for each guardian's playlist
+        const playlistDiv = document.createElement("div");
+        playlistDiv.className = "playlist";
+
+        // Create and append the guardian's name heading
+        const nameHeading = document.createElement("h2");
+        nameHeading.textContent = `${guardian}'s Playlist`;
+        playlistDiv.appendChild(nameHeading);
+
+        // Create and append the list of songs
+        const songList = document.createElement("ul");
+        guardianSongs.forEach(song => {
+            const listItem = document.createElement("li");
+            listItem.innerHTML = `<strong>${song.title}</strong> by ${song.artist}`;
+            songList.appendChild(listItem);
+        });
+        playlistDiv.appendChild(songList);
+
+        // Append the completed playlist div to the main container
+        playlistContainer.appendChild(playlistDiv);
+    });
 }
 
-// Call generatePlaylist and display the playlists for each Guardian
+// Call generatePlaylist to display the playlists for each Guardian
 generatePlaylist(guardians, songs);
-
-
